@@ -1,0 +1,5 @@
+acme_wine:
+    resource: "@AcmeWineBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
