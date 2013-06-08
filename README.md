@@ -29,106 +29,110 @@ Check you're good to go:
 
     php app/check.php
 
-You can use tag created-project tag to update to this stage:
+You can see this stage:
 
     git checkout sf2-initialized
 
-4) Getting started with Symfony
--------------------------------
+2) Generate WineBundle and edit in ORM Designer 2
+-------------------------------------------------
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
+Winebundle contains entities of Restaurants ordering Wines made of mixed GrapeVarieties
+from different Winemakers.
 
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
+Generate WineBundle:
 
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
+    php app/console generate:bundle --namespace=Acme/WineBundle
 
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
+Configure ORM Designer project and set the default bundle:
 
-  * delete the `src/Acme` directory;
+  * Create new project: doc/01_create-new-project.jpg
+  * Set project name and paths: doc/02_configure-new-project.jpg
+  * Configure module:
+    doc/03_configure-module.jpg
+    doc/04_configure-module-name.jpg
+    doc/05_configure-module-export.jpg
 
-  * remove the routing entries referencing AcmeBundle in
-    `app/config/routing_dev.yml`;
+Create entities:
 
-  * remove the AcmeBundle from the registered bundles in `app/AppKernel.php`;
+  * Edit entity: doc/06_edit-entity.jpg
+  * Add entity index:
+    doc/07_add-entity-index.jpg
+    doc/08_configure-entity-index.jpg
+  * Create new entity: doc/09_create-new-entity.jpg
+  * Configure filename of entity class: doc/10_configure-entity-filename.jpg
 
-  * remove the `web/bundles/acmedemo` directory;
+Create associations:
 
-  * remove the `security.providers`, `security.firewalls.login` and
-    `security.firewalls.secured_area` entries in the `security.yml` file or
-    tweak the security configuration to fit your needs.
+  * Create new association: doc/11_create-association.jpg
+  * Set association properties: doc/12_configure-entity-association.jpg
+  * Configure caption: doc/13_name-entity-association.jpg
+  * Create new many-to-many association: doc/14_create-many-to-many-association.jpg
+  * Set many-to-many association properties: doc/15_configure-many-to-many-association.jpg
 
-What's inside?
----------------
+Make our model look better:
 
-The Symfony Standard Edition is configured with the following defaults:
+  * Use grid for aligning model: doc/16_use-grid.jpg
+  * Place entities properly: doc/16_use-grid.jpg
 
-  * Twig is the only configured template engine;
+You can see this stage:
 
-  * Doctrine ORM/DBAL is configured;
+    git checkout wine-bundle
 
-  * Swiftmailer is configured;
+3) Generate SimpleCrmBundle and edit in ORM Designer 2
+------------------------------------------------------
 
-  * Annotations for everything are enabled.
+Let's add a very simple crm to see how we got information about certain restaurant.
 
-It comes pre-configured with the following bundles:
+Generate SimpleCrmBundle:
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+    php app/console generate:bundle --namespace=Acme/SimpleCrmBundle
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+Add new module to ORM Designer:
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+  * Add new module: doc/18_create-new-module.jpg
+  * Configure module:
+    doc/19_configure-module.jpg
+    doc/20_configure-module-export.jpg
+  * Set module color: doc/21_set-module-color.jpg
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+Uni-directional many-to-many association:
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+  * Create uni-directional association: doc/22_create-one-way-many-to-many-association.jpg
+  * Set caption and split association:
+    doc/23_set-association-caption-and-split.jpg
+    doc/24_association-caption-and-split.jpg
+  * Set ORM framework specific association features: doc/26_configure-orm-association-features.jpg
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+Don't forget to set module namespace:
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+  * doc/25_configure-module-namespace.jpg
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+You can see this stage:
 
-  * [**JMSSecurityExtraBundle**][13] - Allows security to be added via
-    annotations
+    git checkout simple-crm-bundle
 
-  * [**JMSDiExtraBundle**][14] - Adds more powerful dependency injection
-    features
+4) Make it all work
+-------------------
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+Export Entities from ORM Designer:
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+  * One click export: doc/27_export.jpg
 
-  * [**SensioGeneratorBundle**][15] (in dev/test env) - Adds code generation
-    capabilities
+Generate database schema:
 
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
+    php app/console doctrine:schema:update --force
 
-Enjoy!
+Generate getters and setters:
+
+    php app/console doctrine:generate:entities Acme
+
+You can see this stage:
+
+    git checkout after-export
+
+See how it works:
+
+    git checkout save-entity
 
 [1]:  http://symfony.com/doc/2.1/book/installation.html
 [2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.1/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.1/index.html
-[6]:  http://symfony.com/doc/2.1/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.1/book/doctrine.html
-[8]:  http://symfony.com/doc/2.1/book/templating.html
-[9]:  http://symfony.com/doc/2.1/book/security.html
-[10]: http://symfony.com/doc/2.1/cookbook/email.html
-[11]: http://symfony.com/doc/2.1/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.1/cookbook/assetic/asset_management.html
-[13]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master
-[14]: http://jmsyst.com/bundles/JMSDiExtraBundle/master
-[15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
