@@ -18,7 +18,14 @@ class DemoController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $country = new \Acme\WineBundle\Entity\Country();
+        $country->setName('Czech Republic');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($country);
+        $em->flush();
+
+        return new \Symfony\Component\HttpFoundation\Response('Created country id '.$country->getId());
     }
 
     /**
