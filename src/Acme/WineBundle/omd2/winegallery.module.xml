@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<orm-designer version="2.1.12.719">
+  <module name="WineGallery" import-format="Doctrine2Php" import-path="src/Acme/WineBundle/Entity" uuid="e058daa9-ccbf-415a-9e57-e31b101494f6">
+    <entity name="Winemaker" uuid="f4a5a2e6-1355-4fa7-8b77-d6837f2b2aab">
+      <field name="id" type="integer" required="true" primary="true" auto-increment="true" uuid="a04b8a2b-f230-4732-a867-65d8594b517a"/>
+      <field name="name" type="string" required="true" uuid="85a41686-d9eb-4300-91fb-5d26d5fd264f"/>
+      <field name="country_id" type="integer" required="true" uuid="09f511ae-3f4a-44c7-adbf-7ebc29655e00"/>
+    </entity>
+    <association from="Winemaker" to="Country" caption="Producing in country" owner-alias="Winemakers" inverse-alias="Country" uuid="986ab33d-5949-423e-8a9e-d64bc9c562f2">
+      <association-field from="country_id" to="id"/>
+    </association>
+    <entity name="Country" uuid="536f5af0-17cc-4666-a4f4-6e1ccf3e1918">
+      <field name="id" type="integer" required="true" primary="true" auto-increment="true" uuid="1d95e120-e9fa-4ffa-8e3e-0cc0c61f0437"/>
+      <field name="name" type="string" size="255" required="true" uuid="bb33619a-79de-4a5d-8ae6-56f154fe82a0"/>
+    </entity>
+    <entity name="Wine" uuid="9c3d2ab6-e472-4fda-b0aa-19839342c30c">
+      <field name="id" type="integer" required="true" primary="true" auto-increment="true" uuid="12e1781d-d1af-45c2-bb6b-98dfbb6b56a4"/>
+      <field name="name" type="string" size="255" required="true" uuid="b4fd4b5e-d42a-444f-8c29-c0b9b0f39637"/>
+      <field name="year" type="integer" required="true" uuid="72ef5463-29a4-4d5d-87a5-b444854c8a8f"/>
+      <field name="winemaker_id" type="integer" required="true" uuid="e6a49045-1f36-4662-b20f-19d98b0b5e78"/>
+    </entity>
+    <association from="Wine" to="Winemaker" caption="Produced by" owner-alias="Wines" inverse-alias="Winemaker" uuid="ccd378d7-f385-4ba7-9f77-31c9c87fd037">
+      <association-field from="winemaker_id" to="id"/>
+    </association>
+    <entity name="GrapeVariety" uuid="11c7598a-0185-4e68-a984-63ed16aa677b">
+      <field name="id" type="integer" required="true" primary="true" auto-increment="true" uuid="c6e67fa3-48bf-4604-b7ca-e949807f16b9"/>
+      <field name="name" type="string" size="255" required="true" uuid="35a5bb5b-85b3-4cb5-aef1-4bf8a3439337"/>
+      <field name="description" type="string" size="9999" required="true" uuid="4c6f418f-8cbe-44ee-b21e-8b85dd7cf7e4"/>
+    </entity>
+    <entity name="WineWithGrapeVariety" uuid="edab0946-bc68-4dd4-a3b4-6c54046b819e">
+      <field name="grape_variety_id" type="integer" required="true" primary="true" uuid="fe9e5541-13e2-4a02-b31c-0b14b0518d54"/>
+      <field name="wine_id" type="integer" required="true" primary="true" uuid="dba50506-8766-4d75-af73-c85bcb75282c"/>
+    </entity>
+    <many-to-many mn-entity="WineWithGrapeVariety" caption="Grapes varieties in wine" uuid="f7851c87-98bf-4152-96da-63f3ee029084">
+      <many-to-many-entity name="Wine" owning-side="true" alias="Wines" uuid="3737abb1-c76e-4bdc-9609-814d1d1d4de1">
+        <many-to-many-field from="wine_id" to="id"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="GrapeVariety" owning-side="false" alias="GrapeVarieties" uuid="e5199c33-0f84-4f07-8579-d417f1d2b611">
+        <many-to-many-field from="grape_variety_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+    <entity name="Wine4Restaurant" uuid="21f8b079-bc17-48d6-a189-9ff41ff9ee63">
+      <field name="wine_id" type="integer" required="true" primary="true" uuid="398fecd4-f3c7-410b-a1b9-78b21d0e1912"/>
+      <field name="restaurant_id" type="integer" required="true" primary="true" uuid="771edfee-6ad0-4cce-a59d-f7e3a42ebc05"/>
+    </entity>
+    <many-to-many mn-entity="Wine4Restaurant" caption="Delivered to restaurant" uuid="ee78d576-26f4-48a8-8328-1781d5b609f0">
+      <many-to-many-entity name="Restaurant" owning-side="true" alias="Restaurants" uuid="08222ef1-ef8a-41af-b13d-f76ef747fca7">
+        <many-to-many-field from="restaurant_id" to="id"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="Wine" owning-side="false" alias="Wines" uuid="3690053b-e832-44b6-a4d4-362df1b37af6">
+        <many-to-many-field from="wine_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+    <entity name="Restaurant" description="Restaurant we deliver to" uuid="1417fef6-b650-4dcc-ab84-39d70575777c">
+      <field name="id" type="integer" required="true" unique="true" primary="true" auto-increment="true" uuid="beac1f65-a24d-45a6-8dd7-c1253a9b5efd"/>
+      <field name="name" type="string" size="255" required="true" uuid="60b1018c-38d2-42e4-97c2-e21846e3874e"/>
+      <field name="number_of_seats" description="Number of seats in the restaurant, optional" type="integer" uuid="730afa3d-15db-47c7-bc7d-7a0df440ecda"/>
+      <field name="owner" type="string" size="255" required="true" uuid="91de7899-fcb6-4a09-9f85-9c3290a79f7a"/>
+      <index name="owner_index" description="We want to search by restaurant owner">
+        <index-field name="owner"/>
+      </index>
+    </entity>
+  </module>
+  <visual-data>
+    <entity uuid="11c7598a-0185-4e68-a984-63ed16aa677b" position-x="677" position-y="3" size-x="0" size-x2="128" size-y="0" size-y2="59"/>
+    <entity uuid="1417fef6-b650-4dcc-ab84-39d70575777c" position-x="79" position-y="355" size-x="0" size-x2="135" size-y="0" size-y2="73"/>
+    <entity uuid="21f8b079-bc17-48d6-a189-9ff41ff9ee63" position-x="339" position-y="253" size-x="0" size-x2="116" size-y="0" size-y2="60"/>
+    <entity uuid="536f5af0-17cc-4666-a4f4-6e1ccf3e1918" position-x="39" position-y="3" size-x="0" size-x2="101" size-y="0" size-y2="45"/>
+    <entity uuid="9c3d2ab6-e472-4fda-b0aa-19839342c30c" position-x="339" position-y="78" size-x="0" size-x2="118" size-y="0" size-y2="73"/>
+    <module uuid="e058daa9-ccbf-415a-9e57-e31b101494f6" bk-color="4294375930" position-x="36" position-y="47" size-x="11" size-x2="839" size-y="22" size-y2="478"/>
+    <entity uuid="edab0946-bc68-4dd4-a3b4-6c54046b819e" position-x="589" position-y="128" size-x="0" size-x2="132" size-y="0" size-y2="60"/>
+    <entity uuid="f4a5a2e6-1355-4fa7-8b77-d6837f2b2aab" position-x="39" position-y="128" size-x="0" size-x2="106" size-y="0" size-y2="59"/>
+  </visual-data>
+</orm-designer>
